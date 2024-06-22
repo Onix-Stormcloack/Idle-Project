@@ -8,22 +8,24 @@ namespace IdleNumbers.Numbers
 {
     public abstract class BaseNumber
     {
-        protected BaseNumber(object nbrBase)
+        protected BaseNumber(float nbrBase)
         {
-            NbrBase = nbrBase;
+            Number = nbrBase;
         }
 
-        protected object NbrBase { get; set; }
+        protected BaseNumber(float number, int precision)
+        {
+            Number = number;
+            Precision = precision;
+        }
 
+        public float Number { get; set; }
 
-
-        public int Precision = 4;
+        public int Precision;
         
         public override string ToString()
         {
-            if (NbrBase is float f)
-                return f.ToString($"F{Precision}");
-            return NbrBase.ToString() ?? throw new InvalidOperationException($"The _number of type {NbrBase.GetType()} can't be return as a string");
+            return Number.ToString($"F{Precision}");
         }
     }
 }

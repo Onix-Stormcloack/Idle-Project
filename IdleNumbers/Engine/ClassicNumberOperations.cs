@@ -43,6 +43,10 @@ namespace IdleNumbers.Engine
         {
             if (a is not ClassicNumber classicA || b is not ClassicNumber classicB)
                 throw new InvalidOperationException("InvalidTypes for Divide Operation");
+            
+            if(classicB.Number == 0)
+                throw new InvalidOperationException("Can't divide by 0");
+
             var result = classicA.Number / classicB.Number;
 
             if (result < 0)

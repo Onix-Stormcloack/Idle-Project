@@ -8,12 +8,6 @@ namespace IdleNumbers.Numbers
 {
     public class ClassicNumber : BaseNumber
     {
-        public ClassicNumber(int nbrBase) : base(nbrBase) { }
-
-        public int Number
-        {
-            get => (int)NbrBase;
-            set => NbrBase = value;
-        }
+        public ClassicNumber(float nbrBase) : base(nbrBase) { }
     }
 }

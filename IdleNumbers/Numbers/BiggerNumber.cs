@@ -11,13 +11,6 @@ namespace IdleNumbers.Numbers
     {
         public BiggerNumber(float nbrBase, int exposant) : base(nbrBase, exposant) { }
 
-        public BiggerNumber(int number) : base(number)
-        {
-            var bNbr = new BigNumber(number);
-            Number = bNbr.Number;
-            _exposant = bNbr.Exposant - 10000;
-        }
-
         public override string ToString()
         {
             return base.ToString().Replace('e', 'E');

@@ -22,7 +22,7 @@ namespace IdleNumbers.Engine.Helpers
                 ClassicNumber cNbr => cNbr switch
                 {
                     { Number: < 1000000 } => new ClassicNumber(cNbr.Number),
-                    { Number: >= 1000000 } => GetCorrectReturnType(new BiggerNumber(cNbr.Number))
+                    { Number: >= 1000000 } => new BigNumber(cNbr.Number),
                 },
                 _ => throw new InvalidOperationException("Type not supported")
             };
@@ -34,15 +34,18 @@ namespace IdleNumbers.Engine.Helpers
                 return (a, b);
 
             if (!IsNumberTypeSuperior(a, b))
-                return (ConvertToCorrectType(b, a).Item2, b);
+            {
+                var (correctB, correctA) = ConvertToCorrectType(b, a);
+                return (correctA, correctB);
+            }
 
-            if (a is BigNumber)
-                return (a, new BigNumber(((ClassicNumber)b).Number));
-
-            if (a is BiggerNumber && b is ClassicNumber classicB)
-                return (a, new BiggerNumber(classicB.Number));
-
-            return (a, new BiggerNumber(((BigNumber)b).Number, ((BigNumber)b).Exposant));
+            if (a is BiggerNumber bigA && b is ClassicNumber classicB)
+                return (new BigNumber(bigA.Number,bigA.Exposant +10000), new BigNumber(classicB.Number));
+            
+            if(a is BiggerNumber && b is BigNumber bigB)
+                return (a, new BiggerNumber(bigB.Number, (bigB).Exposant));
+            
+            return (a, new BigNumber(b.Number));
         }
 
         private static bool IsNumberTypeSuperior(BaseNumber a, BaseNumber b)

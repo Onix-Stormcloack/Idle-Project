@@ -97,7 +97,7 @@ namespace IdleNumbers.Engine
                 exposant--;
             }
             if (exposant <= 0)
-                return new ClassicNumber((int)number);
+                return new ClassicNumber(number);
             return ReturnTypeHelper.GetCorrectReturnType(GetCorrectExposantNumber(number, exposant, expA));
         }
 

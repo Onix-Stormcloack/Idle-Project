@@ -16,12 +16,6 @@ namespace IdleNumbers.Numbers
             set => _exposant = value;
         }
 
-        public float Number
-        {
-            get => (float)NbrBase;
-            set => NbrBase = value;
-        }
-
         public override string ToString()
         {
             return $"{base.ToString()}e{_exposant}";
@@ -30,6 +24,7 @@ namespace IdleNumbers.Numbers
         protected ExposantNumber(float nbrBase, int exposant) : base(nbrBase)
         {
             _exposant = exposant;
+            Precision = 3;
         }
     }
 }

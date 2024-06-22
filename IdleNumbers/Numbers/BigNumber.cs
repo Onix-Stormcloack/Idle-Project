@@ -5,17 +5,17 @@
 
         public BigNumber(float nbrBase, int exposant) : base(nbrBase, exposant) { }
 
-        public BigNumber(int number) : base(0, 0)
+        public BigNumber(float number) : base(0, 0)
         {
             SetFullNumber(number);
         }
 
-        public int GetFullNumber()
+        public float GetFullNumber()
         {
-            return (int)(Number * Math.Pow(10, _exposant));
+            return (float)(Number * Math.Pow(10, _exposant));
         }
 
-        public void SetFullNumber(int number)
+        public void SetFullNumber(float number)
         {
             _exposant = 0;
             Number = number;
