@@ -28,6 +28,8 @@ namespace IdleNumbers.Engine.Helpers
             };
         }
 
+        #region ConvertToCorrectType
+
         public static (BaseNumber, BaseNumber) ConvertToCorrectType(BaseNumber a, BaseNumber b)
         {
             if (a.GetType() == b.GetType())
@@ -40,11 +42,11 @@ namespace IdleNumbers.Engine.Helpers
             }
 
             if (a is BiggerNumber bigA && b is ClassicNumber classicB)
-                return (new BigNumber(bigA.Number,bigA.Exposant +10000), new BigNumber(classicB.Number));
-            
-            if(a is BiggerNumber && b is BigNumber bigB)
+                return (new BigNumber(bigA.Number, bigA.Exposant + 10000), new BigNumber(classicB.Number));
+
+            if (a is BiggerNumber && b is BigNumber bigB)
                 return (a, new BiggerNumber(bigB.Number, (bigB).Exposant));
-            
+
             return (a, new BigNumber(b.Number));
         }
 
@@ -56,5 +58,7 @@ namespace IdleNumbers.Engine.Helpers
                    || ta == typeof(BiggerNumber) && tb == typeof(ClassicNumber)
                    || ta == typeof(BiggerNumber) && tb == typeof(BigNumber);
         }
+
+        #endregion ConvertToCorrectType
     }
 }

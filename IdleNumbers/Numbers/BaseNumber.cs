@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IdleNumbers.Numbers.Helpers;
 
 namespace IdleNumbers.Numbers
 {
@@ -22,10 +23,12 @@ namespace IdleNumbers.Numbers
         public float Number { get; set; }
 
         public int Precision;
+
+        public EnumTypeToString TypeToString = EnumTypeToString.Standard;
         
         public override string ToString()
         {
-            return Number.ToString($"F{Precision}");
+            return NumberToStringHelper.NumberToString(this, TypeToString);
         }
     }
 }

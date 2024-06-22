@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IdleNumbers.Numbers.Helpers;
 
 namespace IdleNumbers.Numbers
 {
@@ -14,11 +15,6 @@ namespace IdleNumbers.Numbers
         {
             get => _exposant;
             set => _exposant = value;
-        }
-
-        public override string ToString()
-        {
-            return $"{base.ToString()}e{_exposant}";
         }
 
         protected ExposantNumber(float nbrBase, int exposant) : base(nbrBase)

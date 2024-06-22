@@ -10,10 +10,5 @@ namespace IdleNumbers.Numbers
     internal class BiggerNumber : BigNumber
     {
         public BiggerNumber(float nbrBase, int exposant) : base(nbrBase, exposant) { }
-
-        public override string ToString()
-        {
-            return base.ToString().Replace('e', 'E');
-        }
     }
 }
