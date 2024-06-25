@@ -22,5 +22,11 @@ namespace IdleNumbers.Numbers
             _exposant = exposant;
             Precision = 3;
         }
+
+        protected ExposantNumber(float nbrBase, int exposant, EnumTypeToString type) : base(nbrBase, type)
+        {
+            _exposant = exposant;
+            Precision = 3;
+        }
     }
 }

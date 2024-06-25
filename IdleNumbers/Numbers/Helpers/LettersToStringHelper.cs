@@ -36,21 +36,32 @@ namespace IdleNumbers.Numbers.Helpers
 
             if(thousands < BaseLetters.Length)
                 return BaseLetters[thousands].ToString();
-            return SuperiorLetters(thousands - 4);
+            
+            var result = SuperiorLettersRecursive(thousands - (BaseLetters.Length - 1));
+            if (result.Length == 1)
+                result = 'a' + result;
+            return result;
         }
 
-        private static string SuperiorLetters(int thousands)
+        private static string SuperiorLettersRecursive(int number)
         {
-            var bigLettersChange = thousands / 50;
-            var smallLettersChange = thousands % 50;
-            
-            if(bigLettersChange > 50 || smallLettersChange > 50)
-                throw new InvalidOperationException("Number too big");
+            var quotient = number / 52;
+            var remainder = number % 52;
+            var ret = string.Empty;
+            if(quotient == 0)
+                return GetLetterFromNumber(number - 1);
+            return  SuperiorLettersRecursive(quotient) + GetLetterFromNumber(remainder - 1);
+        }
 
-            var strBigLetter = bigLettersChange < 25 ? LowerAlphabet[bigLettersChange].ToString() : UpperAlphabet[bigLettersChange - 25].ToString();
-            var strSmallLetter = smallLettersChange < 25 ? LowerAlphabet[smallLettersChange].ToString() : UpperAlphabet[smallLettersChange - 25].ToString();
-
-            return strBigLetter + strSmallLetter;
+        private static string GetLetterFromNumber(int nbr)
+        {
+            return nbr switch
+            {
+                < 0 => LowerAlphabet[0].ToString(),
+                < 26 => LowerAlphabet[nbr].ToString(),
+                < 52 => UpperAlphabet[nbr - 26].ToString(),
+                _ => UpperAlphabet[25].ToString()
+            };
         }
     }
 }

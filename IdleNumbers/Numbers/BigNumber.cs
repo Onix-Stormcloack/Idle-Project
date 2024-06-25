@@ -1,11 +1,19 @@
-﻿namespace IdleNumbers.Numbers
+﻿using IdleNumbers.Numbers.Helpers;
+
+namespace IdleNumbers.Numbers
 {
     internal class BigNumber : ExposantNumber
     {
+        public BigNumber( float nbrBase, int exposant, EnumTypeToString type) : base(nbrBase, exposant, type) { }
 
         public BigNumber(float nbrBase, int exposant) : base(nbrBase, exposant) { }
 
         public BigNumber(float number) : base(0, 0)
+        {
+            SetFullNumber(number);
+        }
+
+        public BigNumber(float number, EnumTypeToString type) : base(0, 0, type)
         {
             SetFullNumber(number);
         }

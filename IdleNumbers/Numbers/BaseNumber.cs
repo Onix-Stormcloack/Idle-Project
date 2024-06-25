@@ -20,6 +20,19 @@ namespace IdleNumbers.Numbers
             Precision = precision;
         }
 
+        protected BaseNumber(float number, EnumTypeToString typeToString)
+        {
+            Number = number;
+            TypeToString = typeToString;
+        }
+
+        protected BaseNumber(float number, int precision, EnumTypeToString typeToString)
+        {
+            Number = number;
+            Precision = precision;
+            TypeToString = typeToString;
+        }
+
         public float Number { get; set; }
 
         public int Precision;

@@ -74,13 +74,22 @@ namespace IdleNumbers.Numbers.Helpers
                 exposant++;
             }
             var strExp = exposant == 0 ? string.Empty : ConwayWechslerToStringHelper.GetSuffix(exposant);
+            
+            if(strExp.Contains("infinity"))
+                return ClassicNumberToScientificString(number);
+
             return NumberToStringWithPrecision(number) + " " + strExp;
         }
 
         private static string ExposantNumberToStandardString(ExposantNumber number)
         {
             var exposant = number is BiggerNumber ? number.Exposant + 10000 : number.Exposant;
-            return NumberToStringWithPrecision(number) + " " + ConwayWechslerToStringHelper.GetSuffix(exposant);
+            var strExp = ConwayWechslerToStringHelper.GetSuffix(exposant);
+
+            if(strExp.Contains("infinity"))
+                return ExposantNumberToScientificString(number);
+
+            return NumberToStringWithPrecision(number) + " " + strExp;
         }
 
         #endregion Standard
