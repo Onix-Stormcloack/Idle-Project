@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IdleNumbers.Numbers.Helpers;
 
 namespace IdleNumbers.Numbers
 {
@@ -16,12 +17,13 @@ namespace IdleNumbers.Numbers
             set => _exposant = value;
         }
 
-        public override string ToString()
+        protected ExposantNumber(float nbrBase, int exposant) : base(nbrBase)
         {
-            return $"{base.ToString()}e{_exposant}";
+            _exposant = exposant;
+            Precision = 3;
         }
 
-        protected ExposantNumber(float nbrBase, int exposant) : base(nbrBase)
+        protected ExposantNumber(float nbrBase, int exposant, EnumTypeToString type) : base(nbrBase, type)
         {
             _exposant = exposant;
             Precision = 3;

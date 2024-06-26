@@ -97,7 +97,7 @@ namespace IdleNumbers.Engine
                 exposant--;
             }
             if (exposant <= 0)
-                return new ClassicNumber(number);
+                return new ClassicNumber(number, a.TypeToString);
             return ReturnTypeHelper.GetCorrectReturnType(GetCorrectExposantNumber(number, exposant, expA));
         }
 
@@ -105,8 +105,8 @@ namespace IdleNumbers.Engine
         {
             return entryNumber switch
             {
-                BiggerNumber => new BiggerNumber(number, exposant),
-                BigNumber => new BigNumber(number, exposant),
+                BiggerNumber => new BiggerNumber(number, exposant, entryNumber.TypeToString),
+                BigNumber => new BigNumber(number, exposant, entryNumber.TypeToString),
                 _ => throw new InvalidOperationException("Error in type")
             };
         }
