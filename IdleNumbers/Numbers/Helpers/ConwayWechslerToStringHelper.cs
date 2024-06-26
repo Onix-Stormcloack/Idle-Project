@@ -2,7 +2,7 @@
 {
     public static class ConwayWechslerToStringHelper
     {
-        private static readonly string illion = "illion";
+        private static readonly string Suffixe = "ilion";
 
         private static readonly string[] Prefixes = new[]
         {
@@ -32,33 +32,17 @@
         {
             int thousands = exponent / 3 - 1; // 1 for thousand, 2 for million, etc.
 
-            if (thousands is < 1)
-                return string.Empty;
-            if(thousands > 9999)
-                return "infinity";
+            switch (thousands)
+            {
+                case < 1:
+                    return string.Empty;
+                case > 9999:
+                    return "infinity";
+            }
 
-            int ones = thousands % 10;
-            int tens = (thousands / 10) % 10;
-            int hundreds = (thousands / 100) % 10;
-            //thousands = (thousands / 1000) % 10;
-
-            string suffix = string.Empty;
-
-            /*if (thousands > 0)
-                suffix += ThousandsPrefixes[thousands];
-
-            if (hundreds > 0)
-                suffix += HundredsPrefixes[hundreds];
-
-            if (tens > 0)
-                suffix += TensPrefixes[tens];
-
-            if (ones > 0 || (hundreds == 0 && tens == 0))
-                suffix += Prefixes[ones];
-            */
-            suffix = CorrectPrefixEnd(SuperiorSuffixRecursive(thousands));
+            var suffix = CorrectPrefixEnd(SuperiorSuffixRecursive(thousands));
             
-            suffix += illion;
+            suffix += Suffixe;
 
             return suffix;
         }

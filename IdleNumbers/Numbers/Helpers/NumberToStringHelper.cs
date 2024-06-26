@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-namespace IdleNumbers.Numbers.Helpers
+﻿namespace IdleNumbers.Numbers.Helpers
 {
     public static class NumberToStringHelper
     {
@@ -74,8 +72,8 @@ namespace IdleNumbers.Numbers.Helpers
                 exposant++;
             }
             var strExp = exposant == 0 ? string.Empty : ConwayWechslerToStringHelper.GetSuffix(exposant);
-            
-            if(strExp.Contains("infinity"))
+
+            if (strExp.Contains("infinity"))
                 return ClassicNumberToScientificString(number);
 
             return NumberToStringWithPrecision(number) + " " + strExp;
@@ -86,7 +84,7 @@ namespace IdleNumbers.Numbers.Helpers
             var exposant = number is BiggerNumber ? number.Exposant + 10000 : number.Exposant;
             var strExp = ConwayWechslerToStringHelper.GetSuffix(exposant);
 
-            if(strExp.Contains("infinity"))
+            if (strExp.Contains("infinity"))
                 return ExposantNumberToScientificString(number);
 
             return NumberToStringWithPrecision(number) + " " + strExp;

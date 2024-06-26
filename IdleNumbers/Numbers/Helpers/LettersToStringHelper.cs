@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace IdleNumbers.Numbers.Helpers
+﻿namespace IdleNumbers.Numbers.Helpers
 {
     public static class LettersToStringHelper
     {
@@ -34,9 +28,9 @@ namespace IdleNumbers.Numbers.Helpers
 
             int thousands = exponent / 3 - 1; // 1 for thousand, 2 for million, etc.
 
-            if(thousands < BaseLetters.Length)
+            if (thousands < BaseLetters.Length)
                 return BaseLetters[thousands].ToString();
-            
+
             var result = SuperiorLettersRecursive(thousands - (BaseLetters.Length - 1));
             if (result.Length == 1)
                 result = 'a' + result;
@@ -48,9 +42,9 @@ namespace IdleNumbers.Numbers.Helpers
             var quotient = number / 52;
             var remainder = number % 52;
             var ret = string.Empty;
-            if(quotient == 0)
+            if (quotient == 0)
                 return GetLetterFromNumber(number - 1);
-            return  SuperiorLettersRecursive(quotient) + GetLetterFromNumber(remainder - 1);
+            return SuperiorLettersRecursive(quotient) + GetLetterFromNumber(remainder - 1);
         }
 
         private static string GetLetterFromNumber(int nbr)
