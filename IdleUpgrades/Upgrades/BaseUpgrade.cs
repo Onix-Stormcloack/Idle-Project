@@ -2,23 +2,23 @@
 
 namespace IdleUpgrades.Upgrades
 {
-    public abstract class UpgradeBase
+    public abstract class BaseUpgrade
     {
-        protected UpgradeBase(BaseNumber cost, string name, string description)
+        protected BaseUpgrade(string name, string description, bool isBought)
         {
-            Cost = cost;
+            IsBought = isBought;
             Name = name;
             Description = description;
         }
 
-        protected UpgradeBase()
+        protected BaseUpgrade()
         {
-            Cost = new ClassicNumber(0);
+            IsBought = false;
             Name = "";
             Description = "";
         }
 
-        public BaseNumber Cost;
+        public bool IsBought;
 
         public string Name;
 
