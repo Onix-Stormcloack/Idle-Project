@@ -1,6 +1,6 @@
 ﻿using IdleNumbers.Numbers;
 
-namespace IdleNumbers.Engine.Helpers
+namespace IdleNumbers.Operations.Helpers
 {
     public static class ReturnTypeHelper
     {

@@ -1,7 +1,7 @@
-﻿using IdleNumbers.Engine.Helpers;
-using IdleNumbers.Numbers;
+﻿using IdleNumbers.Numbers;
+using IdleNumbers.Operations.Helpers;
 
-namespace IdleNumbers.Engine
+namespace IdleNumbers.Operations
 {
     internal class ExposantOperations : IOperations
     {

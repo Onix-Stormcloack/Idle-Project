@@ -2,14 +2,50 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using IdleMainEngine;
+using IdleUpgrades.Upgrades;
 
 namespace MainTestingApp.VM
 {
     public class MainWindowVM : INotifyPropertyChanged
     {
-        public ObservableCollection<Upgrade> Upgrades { get; set; }
+        public ObservableCollection<NormalUpgrade> Upgrades { get; set; }
         public ICommand BuyUpgradeCommand { get; set; }
         public ICommand ShowUpgradeDetailsCommand { get; set; }
+
+        public ICommand MainClickCommand { get; set; }
+
+        public GameEngine GameEngine { get; set; }
+
+        #region MainNumbers
+        
+        private string _currentQi;
+
+        public string CurrentQi
+        {
+            get => _currentQi;
+            set
+            {
+                _currentQi = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _currentGold;
+
+        public string CurrentGold
+        {
+            get => _currentGold;
+            set
+            {
+                _currentGold = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion MainNumbers
+
+        #region Popup
 
         private string _popupTitle;
 
@@ -47,31 +83,59 @@ namespace MainTestingApp.VM
             }
         }
 
+        private NormalUpgrade _selectedUpgrade;
+
+        public NormalUpgrade SelectedUpgrade
+        {
+            get => _selectedUpgrade;
+            set
+            {
+                _selectedUpgrade = value;
+                ShowUpgradeDetails(_selectedUpgrade);
+                OnPropertyChanged();
+            }
+        }
+
+        private void ShowUpgradeDetails(BaseUpgrade upgrade)
+        {
+            PopupTitle = upgrade.Title;
+            PopupDescription = upgrade.Description;
+            if (upgrade is not NormalUpgrade normalUpgrade)
+                return;
+            PopupPrice = normalUpgrade.Cost.ToString();
+        }
+
+        #endregion Popup
+
         public MainWindowVM()
         {
-            Upgrades = new ObservableCollection<Upgrade>
-            {
-                new Upgrade { Title = "Upgrade 1", Price = "100", Description = "Description of Upgrade 1" },
-                new Upgrade { Title = "Upgrade 2", Price = "200", Description = "Description of Upgrade 2" },
-                new Upgrade { Title = "Upgrade 3", Price = "300", Description = "Description of Upgrade 3" }
-            };
+            GameEngine = new GameEngine();
+            
+            Upgrades = new ObservableCollection<NormalUpgrade>();
+            foreach (var upgrade in GameEngine.AvailableUpgrades)
+                if (upgrade is NormalUpgrade normalUpgrade)
+                    Upgrades.Add(normalUpgrade);
+
             _popupTitle = "";
             _popupPrice = "";
             _popupDescription = "";
+            
             BuyUpgradeCommand = new RelayCommand(BuyUpgrade);
-            ShowUpgradeDetailsCommand = new RelayCommand<Upgrade>(ShowUpgradeDetails);
+            ShowUpgradeDetailsCommand = new RelayCommand<BaseUpgrade>(ShowUpgradeDetails);
+            MainClickCommand = new RelayCommand(MainClick);
+        }
+
+        public void MainClick(object parameter)
+        {
+            GameEngine.ClickMain();
+            CurrentQi = GameEngine.GameState.CurrentChi.ToString();
+            CurrentGold = GameEngine.GameState.CurrentGold.ToString();
         }
 
         private void BuyUpgrade(object parameter)
         {
-            // Logic to handle the upgrade purchase
-        }
-
-        private void ShowUpgradeDetails(Upgrade upgrade)
-        {
-            PopupTitle = upgrade.Title;
-            PopupPrice = $"Price: {upgrade.Price}";
-            PopupDescription = upgrade.Description;
+            var upgrade = (BaseUpgrade)parameter;
+            GameEngine.BuyUpdate(upgrade);
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -80,27 +144,6 @@ namespace MainTestingApp.VM
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-    }
-
-    public class Upgrade
-    {
-        public Upgrade(string title, string price, string description)
-        {
-            Title = title;
-            Price = price;
-            Description = description;
-        }
-
-        public Upgrade()
-        {
-            Title = "";
-            Price = "";
-            Description = "";
-        }
-
-        public string Title { get; set; }
-        public string Price { get; set; }
-        public string Description { get; set; }
     }
 }
 

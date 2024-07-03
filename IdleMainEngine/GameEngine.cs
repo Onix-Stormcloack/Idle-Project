@@ -1,7 +1,6 @@
 ﻿using IdleNumbers;
-using IdleNumbers.Engine;
-using IdleNumbers.Engine.Helpers;
 using IdleNumbers.Numbers;
+using IdleNumbers.Operations.Helpers;
 using IdleUpgrades;
 using IdleUpgrades.Upgrades;
 
@@ -22,20 +21,20 @@ namespace IdleMainEngine
         private BaseNumber GoldBonusPerSecond;
 
         //Upgrades
-        private List<BaseUpgrade> AvailableUpgrades;
-        private List<BaseUpgrade> BoughtUpgrades;
-        private List<BaseUpgrade> Upgrades;
+        public List<BaseUpgrade> AvailableUpgrades { get; private set; }
+        public List<BaseUpgrade> BoughtUpgrades { get; private set; }
+        public List<BaseUpgrade> Upgrades { get; private set; }
 
         //Services
         private readonly UpgradeService _upgradeService;
         
         //GameState
-        private readonly GameState _gameState;
+        public readonly GameState GameState;
 
         public GameEngine()
         {
             _upgradeService = new UpgradeService();
-            _gameState = new GameState();
+            GameState = new GameState();
             Initialize();
         }
 
@@ -81,19 +80,24 @@ namespace IdleMainEngine
             }
 
             _upgradeService.BuyUpgrade(Upgrades.IndexOf(upgrade));
+            BoughtUpgrades.Add(upgrade);
+            AvailableUpgrades.Remove(upgrade);
             ApplyUpgrade(upgrade);
+            UpdateSate();
         }
 
-        public void ClickQi()
+        public void ClickMain()
         {
             CurrentQi = ClickBase(CurrentQi, QiPerClick);
+            CurrentGold = ClickBase(CurrentGold, GoldPerClick);
+            UpdateSate();
         }
 
         public void UpdateSate()
         {
-            _gameState.CurrentChi = CurrentQi;
-            _gameState.CurrentGold = CurrentGold;
-            _gameState.UpgradesBought = _upgradeService.GetBoughtUpgrades();
+            GameState.CurrentChi = CurrentQi;
+            GameState.CurrentGold = CurrentGold;
+            GameState.UpgradesBought = _upgradeService.GetBoughtUpgrades();
         }
 
         private void Initialize()

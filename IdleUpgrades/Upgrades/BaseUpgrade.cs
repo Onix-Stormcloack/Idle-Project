@@ -4,23 +4,23 @@ namespace IdleUpgrades.Upgrades
 {
     public abstract class BaseUpgrade
     {
-        protected BaseUpgrade(string name, string description, bool isBought)
+        protected BaseUpgrade(string title, string description, bool isBought)
         {
             IsBought = isBought;
-            Name = name;
+            Title = title;
             Description = description;
         }
 
         protected BaseUpgrade()
         {
             IsBought = false;
-            Name = "";
+            Title = "";
             Description = "";
         }
 
         public bool IsBought;
 
-        public string Name;
+        public string Title;
 
         public string Description;
 

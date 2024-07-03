@@ -8,4 +8,10 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IdleMainEngine\IdleMainEngine.csproj" />
+    <ProjectReference Include="..\IdleNumbers\IdleNumbers.csproj" />
+    <ProjectReference Include="..\IdleUpgrades\IdleUpgrades.csproj" />
+  </ItemGroup>
+
 </Project>
