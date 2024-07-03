@@ -1,11 +1,12 @@
-﻿using IdleNumbers.Engine.Helpers;
+﻿using IdleNumbers.Engine;
+using IdleNumbers.Engine.Helpers;
 using IdleNumbers.Numbers;
 
-namespace IdleNumbers.Engine
+namespace IdleNumbers
 {
-    public static class OperationsFactory
+    public static class OperationService
     {
-        public static IOperations CreateOperations(Type type)
+        private static IOperations CreateOperations(Type type)
         {
             if (type == typeof(ClassicNumber))
                 return new ClassicNumberOperations();

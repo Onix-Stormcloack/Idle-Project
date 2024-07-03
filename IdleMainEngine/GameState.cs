@@ -1,16 +1,21 @@
-﻿using IdleNumbers;
-using IdleNumbers.Numbers;
-using IdleUpgrades;
-using IdleUpgrades.Upgrades;
+﻿using IdleNumbers.Numbers;
 
 namespace IdleMainEngine
 {
     public class GameState
     {
-        //TODO: Add properties to represent the game state
-        public BaseNumber CurrentNumber { get; set; }
-        public IList<BaseUpgrade> AvailableUpgrades { get; set; }
-        public BaseUpgrade SelectedUpgrade { get; set; }
+        public GameState()
+        {
+            CurrentChi = new ClassicNumber(0);
+            CurrentGold = new ClassicNumber(0);
+            UpgradesBought = new List<int>();
+        }
+
+        public BaseNumber CurrentChi { get; set; }
+
+        public BaseNumber CurrentGold { get; set; }
+
+        public List<int> UpgradesBought { get; set; }
 
         // Add any other game state properties here
     }

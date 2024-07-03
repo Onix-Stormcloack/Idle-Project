@@ -67,5 +67,19 @@ namespace IdleNumbers.Engine.Helpers
         }
 
         #endregion ConvertToCorrectType
+
+        public static bool IsNumberSuperiorOrEqual(BaseNumber a, BaseNumber b)
+        {
+            if(a.GetType() == b.GetType())
+                return a.Number >= b.Number;
+            return IsNumberTypeSuperior(a, b);
+        }
+
+        public static bool IsEqual(BaseNumber a, BaseNumber b)
+        {
+            if (a.GetType() == b.GetType())
+                return a.Number == b.Number;
+            return false;
+        }
     }
 }
