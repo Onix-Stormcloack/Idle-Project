@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IdleNumbers\IdleNumbers.csproj" />
-    <ProjectReference Include="..\IdleUpgrades\IdleUpgrades.csproj" />
+    <ProjectReference Include="..\IdleNumber\IdleNumbers.csproj" />
+    <ProjectReference Include="..\IdleUpgrade\IdleUpgrades.csproj" />
   </ItemGroup>
 
 </Project>

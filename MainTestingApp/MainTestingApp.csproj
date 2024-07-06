@@ -9,9 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\IdleMainEngine\IdleMainEngine.csproj" />
-    <ProjectReference Include="..\IdleNumbers\IdleNumbers.csproj" />
-    <ProjectReference Include="..\IdleUpgrades\IdleUpgrades.csproj" />
+    <ProjectReference Include="..\IdleMainEngines\IdleMainEngine.csproj" />
+    <ProjectReference Include="..\IdleUpgrade\IdleUpgrades.csproj" />
   </ItemGroup>
 
 </Project>
