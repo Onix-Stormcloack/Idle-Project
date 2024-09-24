@@ -18,11 +18,11 @@ namespace IdleUpgrades.Upgrades
             Description = "";
         }
 
-        public bool IsBought;
+        public bool IsBought { get; set; }
 
-        public string Title;
+        public string Title { get; set; }
 
-        public string Description;
+        public string Description { get; set; }
 
     }
 }

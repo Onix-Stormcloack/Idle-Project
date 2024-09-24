@@ -1,4 +1,5 @@
-﻿using IdleNumbers;
+﻿using System.Timers;
+using IdleNumbers;
 using IdleNumbers.Numbers;
 using IdleNumbers.Operations.Helpers;
 using IdleUpgrades;
@@ -8,6 +9,9 @@ namespace IdleMainEngine
 {
     public class GameEngine
     {
+        //Timer
+        public static System.Timers.Timer MainTimer = new();
+        
         //Qi
         private BaseNumber CurrentQi;
         private BaseNumber QiPerClick;
@@ -97,6 +101,8 @@ namespace IdleMainEngine
         {
             GameState.CurrentChi = CurrentQi;
             GameState.CurrentGold = CurrentGold;
+            GameState.ChiPerSecond = QiPerSecond;
+            GameState.GoldPerSecond = GoldPerSecond;
             GameState.UpgradesBought = _upgradeService.GetBoughtUpgrades();
         }
 
@@ -105,19 +111,24 @@ namespace IdleMainEngine
             //Initialize Qi
             CurrentQi = new ClassicNumber(0);
             QiPerClick = new ClassicNumber(1);
-            QiPerSecond = new ClassicNumber(0);
-            QiBonusPerSecond = new ClassicNumber(0);
+            QiPerSecond = new ClassicNumber(0,1);
+            QiBonusPerSecond = new ClassicNumber(0, 1);
 
             //Initialize Gold
             CurrentGold = new ClassicNumber(0);
             GoldPerClick = new ClassicNumber(0);
-            GoldPerSecond = new ClassicNumber(0);
-            GoldBonusPerSecond = new ClassicNumber(0);
+            GoldPerSecond = new ClassicNumber(0, 1);
+            GoldBonusPerSecond = new ClassicNumber(0, 1);
 
             //Initialize Upgrades
             AvailableUpgrades = _upgradeService.LoadUpgrades();
             BoughtUpgrades = new List<BaseUpgrade>();
             Upgrades = _upgradeService.LoadUpgrades();
+
+            //Initialize Timer
+            MainTimer.Interval = 1000;
+            MainTimer.Elapsed += MainTimerTick;
+            MainTimer.Start();
         }
 
         private BaseNumber ClickBase(BaseNumber a, BaseNumber b)
@@ -125,9 +136,23 @@ namespace IdleMainEngine
             return OperationService.Add(a,b);
         }
 
+        private BaseNumber SecondBase(BaseNumber current, BaseNumber persecond, BaseNumber bonus)
+        {
+            return OperationService.Add(current, CalculatePerSecondBase(persecond, bonus));
+        }
+
         private BaseNumber CalculatePerSecondBase(BaseNumber perSecond, BaseNumber bonusPerSecond)
         {
             return OperationService.Add(perSecond, OperationService.Multiply(bonusPerSecond, new ClassicNumber(100)));
+        }
+
+        private void MainTimerTick(object? sender, ElapsedEventArgs e)
+        {
+            if(GoldPerSecond.Number == 0 && QiPerSecond.Number == 0)
+                return;
+            CurrentQi = SecondBase(CurrentQi, QiPerSecond, QiBonusPerSecond);
+            CurrentGold = SecondBase(CurrentGold, GoldPerSecond, GoldBonusPerSecond);
+            UpdateSate();
         }
     }
 }

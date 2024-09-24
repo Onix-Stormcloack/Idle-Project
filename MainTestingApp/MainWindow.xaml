@@ -4,21 +4,29 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:MainTestingApp.VM"
+        d:DataContext="{d:DesignInstance Type=vm:MainWindowVM}"
         mc:Ignorable="d"
-        Title="Idle Game" Height="450" Width="800">
+        Title="Idle Game" Height="1080" Width="1920">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1.2*"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Left Panel - Production Upgrades Selector -->
         <TabControl Grid.Column="0">
-            <TabItem Header="Upgrade Tab 1">
-                <StackPanel>
-                    <!-- Add your controls for Upgrade Tab 1 here -->
-                </StackPanel>
+            <TabItem Header="Upgrades Bought">
+                <ListBox ItemsSource="{Binding UpgradesBought}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Title}" Width="100"/>
+                                    <TextBlock Text="{Binding Description}" Width="100"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                </ListBox>
             </TabItem>
             <TabItem Header="Upgrade Tab 2">
                 <StackPanel>
@@ -33,14 +41,23 @@
         </TabControl>
 
         <!-- Center Panel - Click Button -->
-        <StackPanel Grid.Column="1" ClipToBounds="True" Orientation="Vertical">
-            <StackPanel MinHeight="100" ClipToBounds="True" Orientation="Horizontal">
+        <StackPanel Grid.Column="1" ClipToBounds="True" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Stretch">
+            <!-- Qi and Gold Display -->
+            <StackPanel MinHeight="100" ClipToBounds="True" Orientation="Horizontal" VerticalAlignment="Top">
                 <TextBlock Text="Qi: " FontSize="24" VerticalAlignment="Top" Margin=" 20 0 0 0"/>
                 <TextBlock Text="{Binding CurrentQi}" FontSize="24" VerticalAlignment="Top" Margin="10 0 0 0"/>
                 <TextBlock Text="Gold: " FontSize="24" VerticalAlignment="Top" Margin="200 0 0 0"/>
                 <TextBlock Text="{Binding CurrentGold}" FontSize="24" VerticalAlignment="Top" Margin="10 0 0 0"/>
-
             </StackPanel>
+            <!-- Qi and Gold per second Display -->
+            <StackPanel MinHeight="100" ClipToBounds="True" Orientation="Horizontal" VerticalAlignment="Top">
+                <TextBlock Text="QpS: " FontSize="24" VerticalAlignment="Top" Margin=" 20 0 0 0"/>
+                <TextBlock Text="{Binding CurrentQiperSecond}" FontSize="24" VerticalAlignment="Top" Margin="10 0 0 0"/>
+                <TextBlock Text="GpS: " FontSize="24" VerticalAlignment="Top" Margin="200 0 0 0"/>
+                <TextBlock Text="{Binding CurrentGoldperSecond}" FontSize="24" VerticalAlignment="Top" Margin="10 0 0 0"/>
+            </StackPanel>
+
+
             <Button Content="Click Me!" FontSize="24" Command="{Binding MainClickCommand}" 
                     HorizontalAlignment="Center" VerticalAlignment="Center" 
                     Width="200" Height="200"/>
@@ -50,9 +67,10 @@
         <ListBox Grid.Column="2" ItemsSource="{Binding Upgrades}" SelectionMode="Single" SelectedItem="{Binding SelectedUpgrade}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Title}" Width="100"/>
-                        <TextBlock Text="{Binding Cost}" Width="50"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Top" CanHorizontallyScroll="True">
+                        <TextBlock Text="{Binding Title}" Width="100" Margin="5 0"/>
+                        <TextBlock Text="{Binding Description}" Width="100" Margin="5 0"/>
+                        <TextBlock Text="{Binding Cost}" Width="50" Margin="5 0"/>
                         <Button Content="Buy" Width="50" Command="{Binding DataContext.BuyUpgradeCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding}"/>
                     </StackPanel>
                 </DataTemplate>
